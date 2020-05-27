@@ -198,3 +198,46 @@ try {
         }
     })();
     ```
+
+### Ejercicio
+
+Las APIs que proveemos, tambien necesitan ser capaces de responder ante errores que puedan suceder durante el manejo de una request. Esto implica que dichos errores sean expresivos, como tambien consistentes para que puedan ser manejados correctamente por los clientes.
+
+Para desarrollar estos conceptos, vamos a extender los endpoints de la API desarrollada durante la clase anterior de manera tal, que ante eventos de error durante el procesamiento de una request, podamos obtener la siguiente respuesta:
+
+#### Ejemplo de respuesta de error
+
+```json
+{
+    "errors": [
+        {
+            "code": 123,
+            "message": "Este es un mensaje de error descriptivo"
+        }
+    ]
+}
+
+```
+
+Las respuestas de errore estaran compuesta por un `Array` de objetos de error. Cada objeto de error debe tener un código único que lo represente, como también un mensaje que agrege información sobre el mismo.
+
+Los errores, también deben ser devueltos haciendo uso del código HTTP correspondiente. Por ejemplo, si un usuario no está autorizado para acceder a determinado endpoint, se deberá retornar un código HTTP `403`.
+
+#### Nuevas validaciones
+
+1. **POST** */orders*
+
+    **1a.** Se debe validar que el cliente que desea crear una orden tenga los permisos correspondientes.
+
+    **1b.** Se debe validar que la orden posea al menos 1 item.
+
+    **1c.** Se debe validar que todos los items de la orden posean tanto una `id` como `description`.
+
+    En el caso de que las validaciones no se cumplan, se debera devolver los errores que se detectaron en la respuesta (discutir errores de autorizacion y errores de validación).
+
+
+2. **GET** */orders*, **GET** */orders/:id*
+
+    **2a.** Se debe validar que el cliente que desea crear una orden tenga los permisos correspondientes.
+
+Los códigos elegidos para los errores quedan a elección, en la medida que ante mismo error se devuelva siempre el mismo.
